@@ -18,6 +18,7 @@ type HeroProps = {
 };
 
 const defaultImages = [
+  // Replace these placeholder hero slideshow images with the final approved hero assets from the client.
   "/photo1.JPG",
   "/photo2.JPG",
   "/photo3.JPG",
@@ -27,7 +28,10 @@ const defaultImages = [
 
 export default function Hero({ images = defaultImages }: HeroProps) {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#131313] text-[#E5E2E1]">
+    <section
+      id="home"
+      className="relative min-h-screen scroll-mt-32 overflow-hidden bg-[#131313] text-[#E5E2E1]"
+    >
       <Slideshow images={images} />
 
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(14,14,14,0.82)_0%,rgba(19,19,19,0.28)_26%,rgba(19,19,19,0.2)_62%,rgba(14,14,14,0.88)_100%)]" />

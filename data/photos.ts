@@ -1,5 +1,7 @@
 import { Photo } from "@/types/photo";
 
+// Replace these temporary image paths and metadata with the final client-approved gallery assets.
+// Files should live in /public and be referenced like "/your-image-name.jpg".
 export const photos: Photo[] = [
   {
     id: 1,

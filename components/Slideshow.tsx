@@ -45,6 +45,7 @@ export default function Slideshow({ images }: SlideshowProps) {
             alt=""
             fill
             priority
+            loading="eager"
             className="object-cover object-center scale-[0.985]"
             sizes="100vw"
           />

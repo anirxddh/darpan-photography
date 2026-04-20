@@ -14,7 +14,12 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const navItems = ["Portfolio", "Services", "About", "Journal"];
+const navItems = [
+  { label: "Portfolio", targetId: "portfolio" },
+  { label: "Services", targetId: "services" },
+  { label: "About", targetId: "about" },
+  { label: "Journal", targetId: "journal" },
+];
 
 const mobileMenuVariants = {
   hidden: {
@@ -76,6 +81,26 @@ const mobileItemVariants = {
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const scrollToSection = (targetId: string) => {
+    const targetSection = document.getElementById(targetId);
+
+    if (!targetSection) {
+      return;
+    }
+
+    // Tune this offset window (50-80px) to control how "full" each section appears after scroll.
+    const navbarOffset = window.innerWidth >= 1024 ? 80 : 64;
+    const topPosition =
+      targetSection.getBoundingClientRect().top + window.scrollY - navbarOffset;
+
+    window.scrollTo({
+      top: Math.max(topPosition, 0),
+      behavior: "smooth",
+    });
+
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-6 text-[#E5E2E1] sm:px-6 lg:px-10 lg:pt-8">
       <div
@@ -87,7 +112,12 @@ export default function Navbar() {
             "inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(255,255,255,0.03), 0 18px 50px rgba(0,0,0,0.24)",
         }}
       >
-        <div className={`${manrope.className} flex items-baseline gap-2 uppercase`}>
+        <button
+          type="button"
+          className={`${manrope.className} flex items-baseline gap-2 uppercase`}
+          onClick={() => scrollToSection("home")}
+          aria-label="Go to top"
+        >
           <span className="text-[0.95rem] font-extrabold tracking-[0.28em] text-[#E5E2E1] sm:text-[1.08rem]">
             Darpan
           </span>
@@ -101,19 +131,21 @@ export default function Navbar() {
           >
             Photography
           </span>
-        </div>
+        </button>
 
         <nav
           className={`${inter.className} hidden items-center gap-8 lg:flex`}
           aria-label="Primary"
         >
           {navItems.map((item) => (
-            <span
-              key={item}
-              className="cursor-default text-[0.68rem] uppercase tracking-[0.24em] text-[#99907C] transition-colors duration-500 hover:text-[#E5E2E1]"
+            <button
+              key={item.label}
+              type="button"
+              className="text-[0.68rem] uppercase tracking-[0.24em] text-[#99907C] transition-colors duration-500 hover:text-[#E5E2E1]"
+              onClick={() => scrollToSection(item.targetId)}
             >
-              {item}
-            </span>
+              {item.label}
+            </button>
           ))}
 
           <button
@@ -122,6 +154,7 @@ export default function Navbar() {
             style={{
               backgroundImage: "linear-gradient(135deg, #F2CA50 0%, #D4AF37 100%)",
             }}
+            onClick={() => scrollToSection("contact")}
           >
             Inquire
           </button>
@@ -162,13 +195,13 @@ export default function Navbar() {
               <div className="relative flex flex-col gap-2">
                 {navItems.map((item) => (
                   <motion.button
-                    key={item}
+                    key={item.label}
                     type="button"
                     variants={mobileItemVariants}
                     className={`${inter.className} py-3 text-left text-[0.74rem] uppercase tracking-[0.24em] text-[#E5E2E1] transition-colors duration-300 hover:text-[#F2CA50]`}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={() => scrollToSection(item.targetId)}
                   >
-                    {item}
+                    {item.label}
                   </motion.button>
                 ))}
 
@@ -179,7 +212,7 @@ export default function Navbar() {
                   style={{
                     backgroundImage: "linear-gradient(135deg, #F2CA50 0%, #D4AF37 100%)",
                   }}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => scrollToSection("contact")}
                 >
                   Inquire
                 </motion.button>

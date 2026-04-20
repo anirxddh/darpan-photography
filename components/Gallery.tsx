@@ -76,7 +76,10 @@ export default function Gallery() {
   }, [activeCategory]);
 
   return (
-    <section className="bg-[#131313] px-6 py-28 text-[#E5E2E1] sm:px-10 sm:py-36 lg:px-16 lg:py-40">
+    <section
+      id="portfolio"
+      className="scroll-mt-32 bg-[#131313] px-6 py-28 text-[#E5E2E1] sm:px-10 sm:py-36 lg:px-16 lg:py-40"
+    >
       <div className="mx-auto flex w-full max-w-[88rem] flex-col gap-16 lg:gap-20">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-[36rem]">
@@ -115,11 +118,11 @@ export default function Gallery() {
         {/* Replace this static import with backend API data once the gallery is served dynamically. */}
         {/* Adjust luxury spacing via the grid gap classes and hover pacing through the transition duration below. */}
         <motion.div
+          key={activeCategory}
           className="grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-16 xl:grid-cols-3 2xl:grid-cols-4 xl:gap-x-16 xl:gap-y-20"
           variants={galleryContainerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.18 }}
+          animate="visible"
         >
           {filteredPhotos.map((photo) => (
             <motion.article
